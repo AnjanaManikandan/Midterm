@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Number Guessing Game by Your Name</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+            background-color: #fddede;
+            margin: 20px;
+        }
+        h2 {
+            color: #e03c3c;
+            text-shadow: 2px 2px 2px #ffffff;
+        }
+        p {
+            color: #bf0000;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button {
+            padding: 12px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #e03c3c;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #bf0000;
+        }
+        #feedback {
+            font-size: 20px;
+            font-weight: bold;
+            color: #bf0000;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>🎉 Number Guessing Game 🎉</h2>
+    <p>Can you guess the number between 1 and 100?</p>
+    <input type="number" id="guessInput" placeholder="Enter your guess">
+    <button onclick="checkGuess()">Make a Guess</button>
+    <p id="feedback"></p>
+
+    <script>
+        const secretNumber = Math.floor(Math.random() * 100) + 1;
+        const feedbackElement = document.getElementById('feedback');
+        let numberOfGuesses = 0;
+
+        function checkGuess() {
+            numberOfGuesses++;
+            const userGuess = parseInt(document.getElementById('guessInput').value);
+            
+            if (userGuess > secretNumber) {
+                feedbackElement.textContent = 'Too high! 📈 Try again.';
+            } else if (userGuess < secretNumber) {
+                feedbackElement.textContent = 'Too low! 📉 Try again.';
+            } else {
+                const points = calculatePoints(numberOfGuesses);
+                feedbackElement.innerHTML = `<span style="color: #008000;">Correct! 🎉 Well done.</span><br>You guessed the number in ${numberOfGuesses} attempts.<br>Your score: ${points} points.`;
+            }
+        }
+
+        function calculatePoints(guesses) {
+            const basePoints = 100;
+            const penaltyPerGuess = 10;
+            return Math.max(0, basePoints - (penaltyPerGuess * (guesses - 1)));
+        }
+    </script>
+</body>
+</html>
